@@ -1,18 +1,37 @@
 defmodule Turnstile do
-  @moduledoc """
-  Documentation for Turnstile.
-  """
+  def start do
+    {:locked}
+  end
 
-  @doc """
-  Hello world.
+  def coin(turnstile) do
+    unlock(turnstile)
+  end
 
-  ## Examples
+  def pass(turnstile) do
+    lock(turnstile)
+  end
 
-      iex> Turnstile.hello
-      :world
+  def power({:power_off}) do
+    {:locked}
+  end
 
-  """
-  def hello do
-    :world
+  def power(_) do
+    {:power_off}
+  end
+
+  defp lock({:unlocked}) do
+    {:locked}
+  end
+
+  defp lock(_) do
+    {:locked, :alarm}
+  end
+
+  defp unlock({:locked}) do
+    {:unlocked}
+  end
+
+  defp unlock({:unlocked}) do
+    {:unlocked, :thanks}
   end
 end
